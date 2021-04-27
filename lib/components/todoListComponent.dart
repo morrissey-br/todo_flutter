@@ -16,15 +16,28 @@ class _TodoListState extends State<TodoListComponent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.todoList.title,
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade400),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(20),
+            ),
+          ),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  widget.todoList.title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline4
+                      .copyWith(color: Colors.black),
+                ),
+              ),
+            ],
+          ),
         ),
-        ListView.builder(
-            shrinkWrap: true,
-            itemCount: widget.todoList.todos.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Text(widget.todoList.todos[index].text);
-            }),
       ],
     );
   }

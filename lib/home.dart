@@ -18,10 +18,11 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     todoLists = [];
-    todoLists.add(TodoList.create('First Todo List'));
-    todoLists.add(TodoList.create('Second Todo List'));
+    todoLists.add(TodoList.create('Groceries'));
+    todoLists.add(TodoList.create('Work'));
+    todoLists.add(TodoList.create('Todo'));
 
-    todoLists[0].add(Todo.create('First Todo'));
+    todoLists[0].add(Todo.create('Diner with Carol'));
     todoLists[0].add(Todo.create('Second Todo'));
     todoLists[0].add(Todo.create('Third Todo'));
     todoLists[1].add(Todo.create('Fourth Todo'));
@@ -30,13 +31,22 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
         appBar: AppBar(
+          backwardsCompatibility: false,
           title: Text(widget.title),
+          titleTextStyle: Theme.of(context)
+              .textTheme
+              .headline4
+              .copyWith(color: Colors.black),
+          backgroundColor: Colors.white,
+          elevation: 0,
         ),
         body: ListView.builder(
             itemCount: todoLists.length,
             itemBuilder: (BuildContext context, int index) {
-              return TodoListComponent(
-                todoList: todoLists[index],
+              return Container(
+                child: TodoListComponent(
+                  todoList: todoLists[index],
+                ),
               );
             }));
   }
