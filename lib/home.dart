@@ -18,16 +18,22 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     todoLists = [];
-    todoLists.add(
-        TodoList.create(title: 'Groceries', titleColor: Colors.orange.value));
-    // todoLists
-    //     .add(TodoList.create(title: 'Work', titleColor: Colors.purple.value));
-    // todoLists
-    //     .add(TodoList.create(title: 'Todo', titleColor: Colors.blue.value));
+    todoLists.add(TodoList.create(
+      title: 'Groceries',
+      color: Colors.orange.value,
+    ));
+    todoLists.add(TodoList.create(
+      title: 'Work',
+      color: Colors.purple.value,
+    ));
+    todoLists.add(TodoList.create(
+      title: 'Todo',
+      color: Colors.blue.value,
+    ));
 
-    todoLists[0].add(Todo.create('Diner with Carol'));
-    todoLists[0].add(Todo.create('Second Todo'));
-    todoLists[0].add(Todo.create('Third Todo'));
+    // todoLists[2].add(Todo.create('Diner with Carol'));
+    // todoLists[2].add(Todo.create('Second Todo'));
+    // todoLists[2].add(Todo.create('Third Todo'));
     // todoLists[1].add(Todo.create('Fourth Todo'));
     // todoLists[1].add(Todo.create('Fifth Todo'));
     // todoLists[1].add(Todo.create('Sixth Todo'));

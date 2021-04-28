@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_flutter/components/todoComponent.dart';
+import 'package:todo_flutter/model/todo.dart';
 import 'package:todo_flutter/model/todoList.dart';
 
 class TodoListComponent extends StatefulWidget {
@@ -42,29 +44,31 @@ class _TodoListState extends State<TodoListComponent> {
                       style: Theme.of(context)
                           .textTheme
                           .headline4
-                          .copyWith(color: Color(widget.todoList.titleColor)),
+                          .copyWith(color: Color(widget.todoList.color)),
                     ),
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      child: Column(
-                        children: [
-                          Text('123'),
-                          Text('123'),
-                          Text('123'),
-                          Text('123'),
-                          Text('123'),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              // TODO: COMENTADO ABAIXO ESTÁ O WIDGET QUE CONTEM OS TODOS, ESSE WIDGET PRECISA SER COLAPSÁVEL
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: Padding(
+              //         padding: EdgeInsets.symmetric(vertical: 16),
+              //         child: ListView.builder(
+              //           shrinkWrap: true,
+              //           itemCount: widget.todoList.todos.length,
+              //           itemBuilder: (BuildContext context, int index) {
+              //             return TodoComponent(
+              //               todo: widget.todoList.todos[index],
+              //               color: widget.todoList.color,
+              //             );
+              //           },
+              //         ),
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),
