@@ -18,26 +18,31 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     todoLists = [];
-    todoLists.add(TodoList.create('Groceries'));
-    todoLists.add(TodoList.create('Work'));
-    todoLists.add(TodoList.create('Todo'));
+    todoLists.add(
+        TodoList.create(title: 'Groceries', titleColor: Colors.orange.value));
+    // todoLists
+    //     .add(TodoList.create(title: 'Work', titleColor: Colors.purple.value));
+    // todoLists
+    //     .add(TodoList.create(title: 'Todo', titleColor: Colors.blue.value));
 
     todoLists[0].add(Todo.create('Diner with Carol'));
     todoLists[0].add(Todo.create('Second Todo'));
     todoLists[0].add(Todo.create('Third Todo'));
-    todoLists[1].add(Todo.create('Fourth Todo'));
-    todoLists[1].add(Todo.create('Fifth Todo'));
-    todoLists[1].add(Todo.create('Sixth Todo'));
+    // todoLists[1].add(Todo.create('Fourth Todo'));
+    // todoLists[1].add(Todo.create('Fifth Todo'));
+    // todoLists[1].add(Todo.create('Sixth Todo'));
 
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backwardsCompatibility: false,
           title: Text(widget.title),
           titleTextStyle: Theme.of(context)
               .textTheme
               .headline4
-              .copyWith(color: Colors.black),
-          backgroundColor: Colors.white,
+              .copyWith(color: Colors.black, fontWeight: FontWeight.bold),
+          backgroundColor: Colors.transparent,
+          toolbarHeight: 75,
           elevation: 0,
         ),
         body: ListView.builder(

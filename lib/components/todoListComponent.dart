@@ -18,22 +18,52 @@ class _TodoListState extends State<TodoListComponent> {
       children: [
         Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade400),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 2,
+                spreadRadius: 0,
+                color: Colors.grey.shade300,
+                offset: Offset(0, -1),
+              )
+            ],
             borderRadius: BorderRadius.vertical(
-              top: Radius.circular(20),
+              top: Radius.circular(30),
             ),
           ),
-          child: Row(
+          child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  widget.todoList.title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline4
-                      .copyWith(color: Colors.black),
-                ),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Text(
+                      widget.todoList.title,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline4
+                          .copyWith(color: Color(widget.todoList.titleColor)),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: Column(
+                        children: [
+                          Text('123'),
+                          Text('123'),
+                          Text('123'),
+                          Text('123'),
+                          Text('123'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
