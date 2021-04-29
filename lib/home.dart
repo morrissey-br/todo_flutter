@@ -31,12 +31,12 @@ class _HomeState extends State<Home> {
       color: Colors.blue.value,
     ));
 
-    // todoLists[2].add(Todo.create('Diner with Carol'));
-    // todoLists[2].add(Todo.create('Second Todo'));
-    // todoLists[2].add(Todo.create('Third Todo'));
-    // todoLists[1].add(Todo.create('Fourth Todo'));
-    // todoLists[1].add(Todo.create('Fifth Todo'));
-    // todoLists[1].add(Todo.create('Sixth Todo'));
+    todoLists[0].add(Todo.create('Diner with Carol'));
+    todoLists[0].add(Todo.create('Second Todo'));
+    todoLists[0].add(Todo.create('Third Todo'));
+    todoLists[1].add(Todo.create('Fourth Todo'));
+    todoLists[1].add(Todo.create('Fifth Todo'));
+    todoLists[1].add(Todo.create('Sixth Todo'));
 
     return Scaffold(
         backgroundColor: Colors.white,
