@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_flutter/components/allDoneComponent.dart';
 import 'package:todo_flutter/components/todoComponent.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
 
@@ -15,7 +16,7 @@ class _TodoListState extends State<TodoGroupComponent>
     with TickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _animation;
-  bool isOpen = false;
+  bool isOpen = true;
 
   @override
   void initState() {
@@ -28,6 +29,11 @@ class _TodoListState extends State<TodoGroupComponent>
       curve: Curves.ease,
       reverseCurve: Curves.easeOut,
     );
+
+    if (isOpen) {
+      _controller.forward();
+    }
+
     super.initState();
   }
 
@@ -94,16 +100,19 @@ class _TodoListState extends State<TodoGroupComponent>
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 16),
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: widget.todoGroup.todos.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return TodoComponent(
-                                todo: widget.todoGroup.todos[index],
-                                color: widget.todoGroup.color,
-                              );
-                            },
-                          ),
+                          child: widget.todoGroup.todos.length > 0
+                              ? ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: widget.todoGroup.todos.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return TodoComponent(
+                                      todo: widget.todoGroup.todos[index],
+                                      color: widget.todoGroup.color,
+                                    );
+                                  },
+                                )
+                              : AllDone(),
                         ),
                       ),
                     ],

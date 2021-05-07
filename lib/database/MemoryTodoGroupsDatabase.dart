@@ -7,29 +7,34 @@ class MemoryTodoGroupsDatabase implements TodoGroupRepository {
   List<TodoGroup> _todoGroups;
 
   MemoryTodoGroupsDatabase() {
-    final todo0 = TodoGroup.create(
+    final todoGroup0 = TodoGroup.create(
       title: 'Groceries',
       color: Colors.orange.value,
     );
-    final todo1 = TodoGroup.create(
+    final todoGroup1 = TodoGroup.create(
       title: 'Work',
       color: Colors.purple.value,
     );
-    final todo2 = TodoGroup.create(
+    final todoGroup2 = TodoGroup.create(
       title: 'Todo',
       color: Colors.blue.value,
     );
 
-    todo2.add(Todo.create('Diner with Carol'));
-    todo2.add(Todo.create('Book hotel'));
-    todo2.add(Todo.create('Hair cut'));
-    todo2.add(Todo.create('Print boarding pass'));
+    final dateTodo = Todo.create('Diner with Carol');
+
+    final doneTodo = Todo.create('Print boarding pass');
+    doneTodo.complete();
+
+    todoGroup2.add(dateTodo);
+    todoGroup2.add(Todo.create('Book hotel'));
+    todoGroup2.add(Todo.create('Hair cut'));
+    todoGroup2.add(doneTodo);
 
     this._todoGroups = [];
 
-    add(todo0);
-    add(todo1);
-    add(todo2);
+    add(todoGroup0);
+    add(todoGroup1);
+    add(todoGroup2);
   }
 
   void add(TodoGroup aTodoGroup) {
