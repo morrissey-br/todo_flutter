@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_flutter/theme.dart';
 
 import 'home.dart';
 
@@ -12,15 +12,7 @@ class TodoFlutter extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Todo Flutter',
-      theme: ThemeData(
-        textTheme: ThemeData.light().textTheme.copyWith(
-              headline4: GoogleFonts.montserrat(
-                  textStyle: ThemeData.light()
-                      .textTheme
-                      .headline4
-                      .copyWith(fontSize: 30)),
-            ),
-      ),
+      theme: getTheme(),
       home: Home(title: 'Hello.'),
     );
   }

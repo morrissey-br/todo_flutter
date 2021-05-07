@@ -3,8 +3,6 @@ import 'package:todo_flutter/components/todoGroupComponent.dart';
 import 'package:todo_flutter/database/MemoryTodoGroupsDatabase.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
 
-import 'model/Todo.dart';
-
 class Home extends StatefulWidget {
   Home({Key key, this.title}) : super(key: key);
   final String title;
