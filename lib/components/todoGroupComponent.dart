@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/components/todoComponent.dart';
-import 'package:todo_flutter/model/todoList.dart';
+import 'package:todo_flutter/model/TodoGroup.dart';
 
-class TodoListComponent extends StatefulWidget {
-  final TodoList todoList;
+class TodoGroupComponent extends StatefulWidget {
+  final TodoGroup todoGroup;
 
-  const TodoListComponent({Key key, this.todoList}) : super(key: key);
+  const TodoGroupComponent({Key key, this.todoGroup}) : super(key: key);
 
   @override
   _TodoListState createState() => _TodoListState();
 }
 
-class _TodoListState extends State<TodoListComponent>
+class _TodoListState extends State<TodoGroupComponent>
     with TickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _animation;
@@ -77,11 +77,11 @@ class _TodoListState extends State<TodoListComponent>
                     Padding(
                       padding: const EdgeInsets.all(18.0),
                       child: Text(
-                        widget.todoList.title,
+                        widget.todoGroup.title,
                         style: Theme.of(context)
                             .textTheme
                             .headline4
-                            .copyWith(color: Color(widget.todoList.color)),
+                            .copyWith(color: Color(widget.todoGroup.color)),
                       ),
                     ),
                   ],
@@ -96,11 +96,11 @@ class _TodoListState extends State<TodoListComponent>
                           padding: EdgeInsets.symmetric(vertical: 16),
                           child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: widget.todoList.todos.length,
+                            itemCount: widget.todoGroup.todos.length,
                             itemBuilder: (BuildContext context, int index) {
                               return TodoComponent(
-                                todo: widget.todoList.todos[index],
-                                color: widget.todoList.color,
+                                todo: widget.todoGroup.todos[index],
+                                color: widget.todoGroup.color,
                               );
                             },
                           ),
