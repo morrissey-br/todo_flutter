@@ -13,7 +13,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<TodoGroup> todoGroup;
-  int todoGroupOpenIndex = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +41,12 @@ class _HomeState extends State<Home> {
         ),
         body: ListView.builder(
             itemCount: todoGroup.length,
+            shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
-              return Container(
-                child: TodoGroupComponent(
-                  todoGroup: todoGroup[index],
-                ),
+              return TodoGroupComponent(
+                index: index,
+                todoGroup: todoGroup[index],
+                isLast: index == todoGroup.length - 1 ? true : false,
               );
             }));
   }

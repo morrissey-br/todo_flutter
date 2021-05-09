@@ -4,19 +4,23 @@ import 'package:todo_flutter/components/todoComponent.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
 
 class TodoGroupComponent extends StatefulWidget {
+  final int index;
   final TodoGroup todoGroup;
+  final bool isLast;
 
-  const TodoGroupComponent({Key key, this.todoGroup}) : super(key: key);
+  const TodoGroupComponent({Key key, this.index, this.todoGroup, this.isLast})
+      : super(key: key);
 
   @override
-  _TodoListState createState() => _TodoListState();
+  _TodoGroupComponentState createState() => _TodoGroupComponentState();
 }
 
-class _TodoListState extends State<TodoGroupComponent>
+class _TodoGroupComponentState extends State<TodoGroupComponent>
     with TickerProviderStateMixin {
+  bool isOpen = false;
+
   AnimationController _controller;
   Animation<double> _animation;
-  bool isOpen = true;
 
   @override
   void initState() {
@@ -29,12 +33,17 @@ class _TodoListState extends State<TodoGroupComponent>
       curve: Curves.ease,
       reverseCurve: Curves.easeOut,
     );
+    super.initState();
+
+    if (widget.isLast) {
+      isOpen = true;
+    }
 
     if (isOpen) {
       _controller.forward();
+    } else {
+      _controller.reverse();
     }
-
-    super.initState();
   }
 
   @override
@@ -43,7 +52,22 @@ class _TodoListState extends State<TodoGroupComponent>
     super.dispose();
   }
 
+  // FIXME: Estuda isso aqui q eu nem sei como funciona...
+  // FIXME: Aprendi no link: https://medium.com/sk-geek/flutter-experiment-to-trigger-animation-when-parent-setstate-84e949530b64
+  // @override
+  // void didUpdateWidget(TodoGroupComponent oldTodoGroupComponent) {
+  //   if (isOpen) {
+  //     _controller.forward();
+  //   } else {
+  //     _controller.reverse();
+  //   }
+  //   super.didUpdateWidget(oldTodoGroupComponent);
+  // }
+
   void _openClose() {
+    if (widget.isLast) {
+      return;
+    }
     setState(() {
       isOpen = !isOpen;
     });
@@ -76,57 +100,47 @@ class _TodoListState extends State<TodoGroupComponent>
                 top: Radius.circular(30),
               ),
             ),
-            child: Column(
+            child: Row(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Text(
-                          widget.todoGroup.title,
-                          style: Theme.of(context).textTheme.headline4.copyWith(
-                                color: Color(widget.todoGroup.color),
-                              ),
-                        ),
-                      ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Text(
+                      widget.todoGroup.title,
+                      style: Theme.of(context).textTheme.headline4.copyWith(
+                            color: Color(widget.todoGroup.color),
+                          ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () {},
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-                SizeTransition(
-                  sizeFactor: _animation,
-                  axisAlignment: -1,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 16),
-                          child: widget.todoGroup.todos.length > 0
-                              ? ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: widget.todoGroup.todos.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return TodoComponent(
-                                      todo: widget.todoGroup.todos[index],
-                                      color: widget.todoGroup.color,
-                                    );
-                                  },
-                                )
-                              : AllDone(),
-                        ),
-                      ),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {},
                   ),
                 ),
               ],
+            ),
+          ),
+        ),
+        SizeTransition(
+          sizeFactor: _animation,
+          axisAlignment: -1,
+          child: Container(
+            child: Center(
+              child: widget.todoGroup.todos.length > 0
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: widget.todoGroup.todos.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return TodoComponent(
+                          todo: widget.todoGroup.todos[index],
+                          color: widget.todoGroup.color,
+                        );
+                      },
+                    )
+                  : AllDone(),
             ),
           ),
         ),
