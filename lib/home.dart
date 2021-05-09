@@ -13,6 +13,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<TodoGroup> todoGroup;
+  int todoGroupOpenIndex = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +22,23 @@ class _HomeState extends State<Home> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backwardsCompatibility: false,
-          title: Text(widget.title),
-          titleTextStyle: Theme.of(context)
-              .textTheme
-              .headline4
-              .copyWith(color: Colors.black, fontWeight: FontWeight.bold),
-          backgroundColor: Colors.transparent,
           toolbarHeight: 75,
-          elevation: 0,
+          title: Text(widget.title),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {},
+              iconSize: Theme.of(context).iconTheme.size,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+            ),
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {},
+              // FIXME: Colocado aqui e não no tema por conta de um bug no Flutter. #58752 já corrigidio, esperando release.
+              iconSize: Theme.of(context).iconTheme.size,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+            ),
+          ],
         ),
         body: ListView.builder(
             itemCount: todoGroup.length,

@@ -12,8 +12,13 @@ class TodoFlutter extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Todo Flutter',
-      theme: getTheme(),
+      theme: ThemeData(
+        textTheme: customTextTheme,
+        iconTheme: customIconThemeData,
+        appBarTheme: customAppBarTheme,
+      ),
       home: Home(title: 'Hello.'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

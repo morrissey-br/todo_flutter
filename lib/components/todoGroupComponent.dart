@@ -80,14 +80,22 @@ class _TodoListState extends State<TodoGroupComponent>
               children: [
                 Row(
                   children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Text(
+                          widget.todoGroup.title,
+                          style: Theme.of(context).textTheme.headline4.copyWith(
+                                color: Color(widget.todoGroup.color),
+                              ),
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(18.0),
-                      child: Text(
-                        widget.todoGroup.title,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline4
-                            .copyWith(color: Color(widget.todoGroup.color)),
+                      child: IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {},
                       ),
                     ),
                   ],
