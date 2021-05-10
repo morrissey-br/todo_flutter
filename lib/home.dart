@@ -40,6 +40,7 @@ class _HomeState extends State<Home> {
           ],
         ),
         body: ListView.builder(
+            padding: EdgeInsets.only(top: 8),
             itemCount: todoGroup.length,
             shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {

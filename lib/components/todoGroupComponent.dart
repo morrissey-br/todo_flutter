@@ -90,10 +90,10 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  blurRadius: 2,
+                  blurRadius: 1,
                   spreadRadius: 0,
                   color: Colors.grey.shade300,
-                  offset: Offset(0, -1),
+                  offset: Offset(0, -2),
                 )
               ],
               borderRadius: BorderRadius.vertical(
@@ -132,6 +132,7 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
               child: widget.todoGroup.todos.length > 0
                   ? ListView.builder(
                       shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount: widget.todoGroup.todos.length,
                       itemBuilder: (BuildContext context, int index) {
                         return TodoComponent(
