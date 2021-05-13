@@ -1,23 +1,19 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/components/todoGroupComponent.dart';
 import 'package:todo_flutter/database/MemoryTodoGroupsDatabase.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
 import 'package:todo_flutter/model/TodoGroupRepository.dart';
 
-import 'components/addTodoGroupAlert.dart';
+import '../components/addTodoGroupAlert.dart';
 
-class Home extends StatefulWidget {
-  Home({Key key, this.title}) : super(key: key);
-  final String title;
+class HomePage extends StatefulWidget {
   final TodoGroupRepository todoGroupRepository = MemoryTodoGroupsDatabase();
 
   @override
-  _HomeState createState() => _HomeState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomeState extends State<Home> {
+class _HomePageState extends State<HomePage> {
   List<TodoGroup> todoGroup;
 
   Future<void> _abrirCardDeAdicao() async {
@@ -47,11 +43,17 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.white,
         appBar: AppBar(
           toolbarHeight: 75,
-          title: Text(widget.title),
+          title: Text('Hello.'),
           actions: [
             IconButton(
               icon: Icon(Icons.settings),
-              onPressed: () {},
+              onPressed: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (BuildContext context) => TodoGroupEdit()),
+                // );
+              },
               iconSize: Theme.of(context).iconTheme.size,
               padding: EdgeInsets.symmetric(horizontal: 20),
             ),

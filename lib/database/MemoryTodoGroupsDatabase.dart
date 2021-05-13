@@ -5,6 +5,25 @@ import 'package:todo_flutter/model/TodoGroupRepository.dart';
 
 class MemoryTodoGroupsDatabase implements TodoGroupRepository {
   List<TodoGroup> _todoGroups;
+  @override
+  void add(TodoGroup aTodoGroup) {
+    _todoGroups.add(aTodoGroup);
+  }
+
+  @override
+  void remove(TodoGroup aTodoGroup) {
+    _todoGroups.remove(aTodoGroup);
+  }
+
+  @override
+  TodoGroup getByIndex(num index) {
+    return _todoGroups[index];
+  }
+
+  @override
+  List<TodoGroup> getAll() {
+    return _todoGroups;
+  }
 
   MemoryTodoGroupsDatabase() {
     final todoGroup0 = TodoGroup.create(
@@ -35,17 +54,5 @@ class MemoryTodoGroupsDatabase implements TodoGroupRepository {
     add(todoGroup0);
     add(todoGroup1);
     add(todoGroup2);
-  }
-
-  void add(TodoGroup aTodoGroup) {
-    _todoGroups.add(aTodoGroup);
-  }
-
-  void remove(TodoGroup aTodoGroup) {
-    _todoGroups.remove(aTodoGroup);
-  }
-
-  List<TodoGroup> getAll() {
-    return _todoGroups;
   }
 }
