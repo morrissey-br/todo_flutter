@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/database/MemoryTodoGroupsDatabase.dart';
 import 'package:todo_flutter/theme.dart';
-import 'pages/homePage.dart';
+// import 'pages/homePage.dart';
 import 'pages/todoGroupEditPage.dart';
 
 void main() {
@@ -18,6 +18,7 @@ class TodoFlutter extends StatelessWidget {
         iconTheme: customIconThemeData,
         appBarTheme: customAppBarTheme,
       ),
+      // home: HomePage(),
       home: TodoGroupEditPage(
         todoGroup: MemoryTodoGroupsDatabase().getByIndex(0),
       ),

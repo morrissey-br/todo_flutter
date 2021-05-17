@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
 
@@ -20,6 +18,10 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
     super.initState();
   }
 
+  reorderTodo(int oldIndex, int newIndex) {
+    debugPrint('reorder $oldIndex $newIndex');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +29,7 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
         title: Text('Editar grupo:'),
         toolbarHeight: 75,
       ),
-      body: ListView(
+      body: Column(
         children: [
           Card(
             child: Column(
@@ -61,6 +63,42 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
                   onTap: () {},
                 ),
               ],
+            ),
+          ),
+          Expanded(
+            child: Card(
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Text(
+                      'Todos',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    trailing: Icon(Icons.add),
+                  ),
+                  Divider(),
+                  Expanded(
+                    child: ReorderableListView(children: [
+                      ListTile(
+                        key: ValueKey(1),
+                        title: Text('lala'),
+                      ),
+                      ListTile(
+                        key: ValueKey(2),
+                        title: Text('lala'),
+                      ),
+                      ListTile(
+                        key: ValueKey(3),
+                        title: Text('lala'),
+                      ),
+                      ListTile(
+                        key: ValueKey(4),
+                        title: Text('lala1'),
+                      ),
+                    ], onReorder: (oldIndex, newIndex) {}),
+                  )
+                ],
+              ),
             ),
           ),
         ],

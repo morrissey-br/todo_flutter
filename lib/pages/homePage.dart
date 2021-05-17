@@ -3,6 +3,7 @@ import 'package:todo_flutter/components/todoGroupComponent.dart';
 import 'package:todo_flutter/database/MemoryTodoGroupsDatabase.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
 import 'package:todo_flutter/model/TodoGroupRepository.dart';
+import 'dart:async';
 
 import '../components/addTodoGroupAlert.dart';
 
@@ -16,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<TodoGroup> todoGroup;
 
-  Future<void> _abrirCardDeAdicao() async {
+  Future<void> _abrirCardDeAdicao() {
     return showDialog(
       context: context, // user must tap button!
       builder: (BuildContext context) {
