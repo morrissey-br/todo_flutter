@@ -5,7 +5,9 @@ abstract class TodoGroupRepository {
 
   void remove(TodoGroup aTodoGroup);
 
-  TodoGroup getByIndex(num index);
+  TodoGroup getByIndex(int index);
+
+  void reorderGroup(int oldIndex, int newIndex);
 
   List<TodoGroup> getAll();
 }

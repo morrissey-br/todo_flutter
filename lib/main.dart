@@ -20,7 +20,7 @@ class TodoFlutter extends StatelessWidget {
       ),
       // home: HomePage(),
       home: TodoGroupEditPage(
-        todoGroup: MemoryTodoGroupsDatabase().getByIndex(0),
+        todoGroup: MemoryTodoGroupsDatabase().getByIndex(2),
       ),
       debugShowCheckedModeBanner: false,
     );

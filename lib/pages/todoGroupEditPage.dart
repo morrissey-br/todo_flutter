@@ -4,7 +4,7 @@ import 'package:todo_flutter/model/TodoGroup.dart';
 class TodoGroupEditPage extends StatefulWidget {
   final TodoGroup todoGroup;
 
-  const TodoGroupEditPage({Key key, this.todoGroup}) : super(key: key);
+  TodoGroupEditPage({Key key, this.todoGroup}) : super(key: key);
   @override
   _TodoGroupEditPageState createState() => _TodoGroupEditPageState();
 }
@@ -18,8 +18,10 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
     super.initState();
   }
 
-  reorderTodo(int oldIndex, int newIndex) {
-    debugPrint('reorder $oldIndex $newIndex');
+  void reorderTodo(int oldIndex, int newIndex) {
+    oldIndex > newIndex
+        ? todoGroup.reorderTodo(oldIndex, newIndex)
+        : todoGroup.reorderTodo(oldIndex, newIndex - 1);
   }
 
   @override
@@ -78,24 +80,19 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
                   ),
                   Divider(),
                   Expanded(
-                    child: ReorderableListView(children: [
-                      ListTile(
-                        key: ValueKey(1),
-                        title: Text('lala'),
-                      ),
-                      ListTile(
-                        key: ValueKey(2),
-                        title: Text('lala'),
-                      ),
-                      ListTile(
-                        key: ValueKey(3),
-                        title: Text('lala'),
-                      ),
-                      ListTile(
-                        key: ValueKey(4),
-                        title: Text('lala1'),
-                      ),
-                    ], onReorder: (oldIndex, newIndex) {}),
+                    child: ReorderableListView.builder(
+                      onReorder: (int oldIndex, int newIndex) {
+                        reorderTodo(oldIndex, newIndex);
+                      },
+                      itemCount: todoGroup.todos.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          key: ValueKey(index),
+                          title: Text(todoGroup.todos[index].text),
+                          trailing: Icon(Icons.drag_indicator),
+                        );
+                      },
+                    ),
                   )
                 ],
               ),

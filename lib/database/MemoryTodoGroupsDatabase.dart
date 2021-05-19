@@ -16,8 +16,13 @@ class MemoryTodoGroupsDatabase implements TodoGroupRepository {
   }
 
   @override
-  TodoGroup getByIndex(num index) {
+  TodoGroup getByIndex(int index) {
     return _todoGroups[index];
+  }
+
+  @override
+  void reorderGroup(int oldIndex, int newIndex) {
+    _todoGroups.insert(newIndex, _todoGroups[oldIndex]);
   }
 
   @override

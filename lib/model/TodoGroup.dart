@@ -20,4 +20,10 @@ class TodoGroup {
   remove(Todo aTodo) {
     todos.removeWhere((todo) => todo.id == aTodo.id);
   }
+
+  reorderTodo(int oldIndex, int newIndex) {
+    Todo changingTodo = todos[oldIndex];
+    todos.removeAt(oldIndex);
+    todos.insert(newIndex, changingTodo);
+  }
 }
