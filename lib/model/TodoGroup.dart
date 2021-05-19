@@ -21,9 +21,9 @@ class TodoGroup {
     todos.removeWhere((todo) => todo.id == aTodo.id);
   }
 
-  reorderTodo(int oldIndex, int newIndex) {
-    Todo changingTodo = todos[oldIndex];
-    todos.removeAt(oldIndex);
-    todos.insert(newIndex, changingTodo);
+  reorderTodo({String todoID, int newTodoPosition}) {
+    Todo changingPositionTodo = todos.firstWhere((todo) => todo.id == todoID);
+    todos.removeWhere((todo) => todo.id == todoID);
+    todos.insert(newTodoPosition - 1, changingPositionTodo);
   }
 }

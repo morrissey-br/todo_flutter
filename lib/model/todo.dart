@@ -7,7 +7,7 @@ class Todo {
 
   Todo._(this.id, this.text, this.status);
 
-  static Todo create(String text) {
+  static Todo create({String text}) {
     return Todo._(Uuid().v1(), text, false);
   }
 

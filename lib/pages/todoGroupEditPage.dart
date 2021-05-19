@@ -19,9 +19,10 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
   }
 
   void reorderTodo(int oldIndex, int newIndex) {
-    oldIndex > newIndex
-        ? todoGroup.reorderTodo(oldIndex, newIndex)
-        : todoGroup.reorderTodo(oldIndex, newIndex - 1);
+    var aTodo = todoGroup.todos[oldIndex];
+    todoGroup.reorderTodo(
+        todoID: aTodo.id,
+        newTodoPosition: oldIndex > newIndex ? newIndex + 1 : newIndex);
   }
 
   @override

@@ -16,13 +16,8 @@ class MemoryTodoGroupsDatabase implements TodoGroupRepository {
   }
 
   @override
-  TodoGroup getByIndex(int index) {
-    return _todoGroups[index];
-  }
-
-  @override
-  void reorderGroup(int oldIndex, int newIndex) {
-    _todoGroups.insert(newIndex, _todoGroups[oldIndex]);
+  TodoGroup getByID(String id) {
+    return _todoGroups.firstWhere((todo) => todo.id == id);
   }
 
   @override
@@ -44,14 +39,14 @@ class MemoryTodoGroupsDatabase implements TodoGroupRepository {
       color: Colors.blue.value,
     );
 
-    final dateTodo = Todo.create('Diner with Carol');
+    final dateTodo = Todo.create(text: 'Diner with Carol');
 
-    final doneTodo = Todo.create('Print boarding pass');
+    final doneTodo = Todo.create(text: 'Print boarding pass');
     doneTodo.complete();
 
     todoGroup2.add(dateTodo);
-    todoGroup2.add(Todo.create('Book hotel'));
-    todoGroup2.add(Todo.create('Hair cut'));
+    todoGroup2.add(Todo.create(text: 'Book hotel'));
+    todoGroup2.add(Todo.create(text: 'Hair cut'));
     todoGroup2.add(doneTodo);
 
     this._todoGroups = [];

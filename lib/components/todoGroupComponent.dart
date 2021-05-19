@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_flutter/components/allDoneComponent.dart';
 import 'package:todo_flutter/components/todoComponent.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
+import 'package:todo_flutter/pages/todoGroupEditPage.dart';
 
 class TodoGroupComponent extends StatefulWidget {
   final int index;
@@ -115,9 +116,18 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
                 ),
                 Padding(
                   padding: const EdgeInsets.all(18.0),
-                  child: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {},
+                  child: InkWell(
+                    child: Icon(Icons.edit),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TodoGroupEditPage(
+                            todoGroup: widget.todoGroup,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
