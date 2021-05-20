@@ -45,44 +45,46 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          toolbarHeight: 75,
-          title: Text('Hello.'),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.settings),
-              onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (BuildContext context) => TodoGroupEdit()),
-                // );
-              },
-              iconSize: Theme.of(context).iconTheme.size,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-            ),
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                _abrirCardDeAdicao();
-              },
-              // FIXME: Colocado aqui e não no tema por conta de um bug no Flutter. #58752 já corrigidio, esperando release.
-              iconSize: Theme.of(context).iconTheme.size,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-            ),
-          ],
-        ),
-        body: ListView.builder(
-            padding: EdgeInsets.only(top: 8),
-            itemCount: todoGroup.length,
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context, int index) {
-              return TodoGroupComponent(
-                index: index,
-                todoGroup: todoGroup[index],
-                isLast: index == todoGroup.length - 1 ? true : false,
-              );
-            }));
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        toolbarHeight: 75,
+        title: Text('Hello.'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //       builder: (BuildContext context) => TodoGroupEdit()),
+              // );
+            },
+            iconSize: Theme.of(context).iconTheme.size,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+          ),
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () {
+              _abrirCardDeAdicao();
+            },
+            // FIXME: Colocado aqui e não no tema por conta de um bug no Flutter. #58752 já corrigidio, esperando release.
+            iconSize: Theme.of(context).iconTheme.size,
+            padding: EdgeInsets.symmetric(horizontal: 20),
+          ),
+        ],
+      ),
+      body: ListView.builder(
+        padding: EdgeInsets.only(top: 8),
+        itemCount: todoGroup.length,
+        shrinkWrap: true,
+        itemBuilder: (BuildContext context, int index) {
+          return TodoGroupComponent(
+            index: index,
+            todoGroup: todoGroup[index],
+            isLast: index == todoGroup.length - 1 ? true : false,
+          );
+        },
+      ),
+    );
   }
 }

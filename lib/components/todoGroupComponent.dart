@@ -84,26 +84,26 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        GestureDetector(
-          onTap: _openClose,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 1,
-                  spreadRadius: 0,
-                  color: Colors.grey.shade300,
-                  offset: Offset(0, -2),
-                )
-              ],
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(30),
-              ),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 1,
+                spreadRadius: 0,
+                color: Colors.grey.shade300,
+                offset: Offset(0, -2),
+              )
+            ],
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(30),
             ),
-            child: Row(
-              children: [
-                Expanded(
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: _openClose,
                   child: Padding(
                     padding: const EdgeInsets.all(18.0),
                     child: Text(
@@ -114,11 +114,16 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
                     ),
                   ),
                 ),
-                Padding(
+              ),
+              // O efeito do Inkwell contido no IconButton é desenhado no widget Material (que é o root).
+              // Como o container antecessor desse botão tem um decoration que define um backgroud color solido, o efeito não aparece pois é renderizado abaixo dele.
+              // Para resolver isso, colocamos um outro widget material em cima do container e dentro dele o botão, assim o efeito é feito acima do decoration.
+              Material(
+                child: Padding(
                   padding: const EdgeInsets.all(18.0),
-                  child: InkWell(
-                    child: Icon(Icons.edit),
-                    onTap: () {
+                  child: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -130,8 +135,8 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
                     },
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         SizeTransition(
