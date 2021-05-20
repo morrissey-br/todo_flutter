@@ -7,6 +7,8 @@ void main() {
   runApp(TodoFlutter());
 }
 
+final UserServices userServices = UserServices.instance();
+
 class TodoFlutter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,9 +19,7 @@ class TodoFlutter extends StatelessWidget {
         iconTheme: customIconThemeData,
         appBarTheme: customAppBarTheme,
       ),
-      home: HomePage(
-        userServices: UserServices.instance(),
-      ),
+      home: HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }

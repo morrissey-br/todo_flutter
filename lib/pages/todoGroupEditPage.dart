@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:todo_flutter/components/addTodoAlert.dart';
+import 'package:todo_flutter/main.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
 
 class TodoGroupEditPage extends StatefulWidget {
-  final TodoGroup todoGroup;
+  final String todoGroupID;
 
-  TodoGroupEditPage({Key key, this.todoGroup}) : super(key: key);
+  TodoGroupEditPage({Key key, this.todoGroupID}) : super(key: key);
   @override
   _TodoGroupEditPageState createState() => _TodoGroupEditPageState();
 }
@@ -14,7 +17,7 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
 
   @override
   void initState() {
-    todoGroup = widget.todoGroup;
+    todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
     super.initState();
   }
 
@@ -23,6 +26,24 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
     todoGroup.reorderTodo(
         todoID: aTodo.id,
         newTodoPosition: oldIndex > newIndex ? newIndex + 1 : newIndex);
+  }
+
+  Future<void> openAddTodoCard() {
+    return showDialog(
+      context: context, // user must tap button!
+      builder: (BuildContext context) {
+        return AddTodoAlert(
+          doneCallBack: (String text) {
+            userServices.addTodoToGroup(
+                todoGroupID: widget.todoGroupID, todoText: text);
+            setState(() {
+              todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
+            });
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -78,6 +99,9 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     trailing: Icon(Icons.add),
+                    onTap: () {
+                      openAddTodoCard();
+                    },
                   ),
                   Divider(),
                   Expanded(

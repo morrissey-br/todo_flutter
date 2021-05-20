@@ -5,7 +5,7 @@ abstract class TodoGroupRepository {
 
   void remove(TodoGroup aTodoGroup);
 
-  TodoGroup getByID(String index);
+  TodoGroup getByID(String aTodoGroupID);
 
   List<TodoGroup> getAll();
 }

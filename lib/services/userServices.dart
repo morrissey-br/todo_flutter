@@ -17,7 +17,11 @@ class UserServices {
     _todoGroupRepository.add(aTodoGroup);
   }
 
-  List getAllTodoGroups() {
+  TodoGroup getTodoGroupByID(String aTodoGroupID) {
+    return _todoGroupRepository.getByID(aTodoGroupID);
+  }
+
+  List<TodoGroup> getAllTodoGroups() {
     return _todoGroupRepository.getAll();
   }
 

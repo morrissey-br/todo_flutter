@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/components/todoGroupComponent.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
-import 'package:todo_flutter/services/userServices.dart';
 import 'dart:async';
 
 import '../components/addTodoGroupAlert.dart';
+import '../main.dart';
 
 class HomePage extends StatefulWidget {
-  final UserServices userServices;
-
-  const HomePage({Key key, this.userServices}) : super(key: key);
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -20,7 +16,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   initState() {
-    todoGroup = widget.userServices.getAllTodoGroups();
+    todoGroup = userServices.getAllTodoGroups();
     super.initState();
   }
 
@@ -30,10 +26,9 @@ class _HomePageState extends State<HomePage> {
       builder: (BuildContext context) {
         return AddTodoGroupAlert(
           doneCallBack: (String text) {
-            widget.userServices
-                .addTodoGroup(title: text, color: Colors.black.value);
+            userServices.addTodoGroup(title: text, color: Colors.black.value);
             setState(() {
-              todoGroup = widget.userServices.getAllTodoGroups();
+              todoGroup = userServices.getAllTodoGroups();
             });
             Navigator.of(context).pop();
           },

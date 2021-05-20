@@ -119,6 +119,7 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
               // Como o container antecessor desse botão tem um decoration que define um backgroud color solido, o efeito não aparece pois é renderizado abaixo dele.
               // Para resolver isso, colocamos um outro widget material em cima do container e dentro dele o botão, assim o efeito é feito acima do decoration.
               Material(
+                color: Colors.transparent,
                 child: Padding(
                   padding: const EdgeInsets.all(18.0),
                   child: IconButton(
@@ -128,7 +129,7 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
                         context,
                         MaterialPageRoute(
                           builder: (context) => TodoGroupEditPage(
-                            todoGroup: widget.todoGroup,
+                            todoGroupID: widget.todoGroup.id,
                           ),
                         ),
                       );
