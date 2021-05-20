@@ -5,6 +5,7 @@ import 'package:todo_flutter/model/TodoGroupRepository.dart';
 
 class MemoryTodoGroupsDatabase implements TodoGroupRepository {
   List<TodoGroup> _todoGroups;
+
   @override
   void add(TodoGroup aTodoGroup) {
     _todoGroups.add(aTodoGroup);

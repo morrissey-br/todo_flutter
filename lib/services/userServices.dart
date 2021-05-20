@@ -3,18 +3,22 @@ import 'package:todo_flutter/model/TodoGroup.dart';
 import 'package:todo_flutter/model/TodoGroupRepository.dart';
 import 'package:todo_flutter/model/Todo.dart';
 
-class UserCases {
+class UserServices {
   TodoGroupRepository _todoGroupRepository = MemoryTodoGroupsDatabase();
 
-  UserCases._();
+  UserServices._();
 
-  static UserCases instance() {
-    return UserCases._();
+  static UserServices instance() {
+    return UserServices._();
   }
 
   void addTodoGroup({String title, int color}) {
     TodoGroup aTodoGroup = TodoGroup.create(title: title, color: color);
     _todoGroupRepository.add(aTodoGroup);
+  }
+
+  List getAllTodoGroups() {
+    return _todoGroupRepository.getAll();
   }
 
   void addTodoToGroup({String todoGroupID, String todoText}) {

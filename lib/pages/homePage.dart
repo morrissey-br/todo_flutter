@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/components/todoGroupComponent.dart';
-import 'package:todo_flutter/database/MemoryTodoGroupsDatabase.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
-import 'package:todo_flutter/model/TodoGroupRepository.dart';
+import 'package:todo_flutter/services/userServices.dart';
 import 'dart:async';
 
 import '../components/addTodoGroupAlert.dart';
 
 class HomePage extends StatefulWidget {
-  final TodoGroupRepository todoGroupRepository = MemoryTodoGroupsDatabase();
+  final UserServices userServices;
+
+  const HomePage({Key key, this.userServices}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -17,17 +18,22 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<TodoGroup> todoGroup;
 
+  @override
+  initState() {
+    todoGroup = widget.userServices.getAllTodoGroups();
+    super.initState();
+  }
+
   Future<void> _abrirCardDeAdicao() {
     return showDialog(
       context: context, // user must tap button!
       builder: (BuildContext context) {
         return AddTodoGroupAlert(
           doneCallBack: (String text) {
-            TodoGroup newTodoGroup =
-                TodoGroup.create(color: Colors.black.value, title: text);
-            widget.todoGroupRepository.add(newTodoGroup);
+            widget.userServices
+                .addTodoGroup(title: text, color: Colors.black.value);
             setState(() {
-              todoGroup = widget.todoGroupRepository.getAll();
+              todoGroup = widget.userServices.getAllTodoGroups();
             });
             Navigator.of(context).pop();
           },
@@ -38,8 +44,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    todoGroup = widget.todoGroupRepository.getAll();
-
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
