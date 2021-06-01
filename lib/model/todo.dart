@@ -11,8 +11,8 @@ class Todo {
     return Todo._(Uuid().v1(), text, false);
   }
 
-  complete() {
-    this.status = true;
+  changeStatus() {
+    this.status = !this.status;
   }
 
   edit(String text) {

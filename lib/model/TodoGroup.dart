@@ -13,11 +13,11 @@ class TodoGroup {
     return TodoGroup._(id: Uuid().v1(), title: title, color: color, todos: []);
   }
 
-  add(Todo aTodo) {
+  void add(Todo aTodo) {
     todos.add(aTodo);
   }
 
-  remove(Todo aTodo) {
+  void remove(Todo aTodo) {
     todos.removeWhere((todo) => todo.id == aTodo.id);
   }
 

@@ -36,4 +36,9 @@ class UserServices {
     TodoGroup aTodoGroup = _todoGroupRepository.getByID(todoGroupID);
     aTodoGroup.reorderTodo(todoID: todoID, newTodoPosition: newTodoPosition);
   }
+
+  void markTodoState({String todoGroupID, String todoID}) {
+    TodoGroup aTodoGroup = _todoGroupRepository.getByID(todoGroupID);
+    aTodoGroup.todos.firstWhere((todo) => todo.id == todoID).changeStatus();
+  }
 }

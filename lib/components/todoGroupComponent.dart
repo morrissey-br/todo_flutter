@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/components/allDoneComponent.dart';
 import 'package:todo_flutter/components/todoComponent.dart';
+import 'package:todo_flutter/main.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
 import 'package:todo_flutter/pages/todoGroupEditPage.dart';
 
 class TodoGroupComponent extends StatefulWidget {
   final int index;
-  final TodoGroup todoGroup;
+  final String todoGroupID;
   final bool isLast;
 
-  const TodoGroupComponent({Key key, this.index, this.todoGroup, this.isLast})
+  const TodoGroupComponent({Key key, this.index, this.todoGroupID, this.isLast})
       : super(key: key);
 
   @override
@@ -18,6 +19,7 @@ class TodoGroupComponent extends StatefulWidget {
 
 class _TodoGroupComponentState extends State<TodoGroupComponent>
     with TickerProviderStateMixin {
+  TodoGroup todoGroup;
   bool isOpen = false;
 
   AnimationController _controller;
@@ -25,6 +27,8 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
 
   @override
   void initState() {
+    todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
+
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 200),
@@ -79,6 +83,13 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
     }
   }
 
+  void _markTodoStatus({String todoID}) {
+    userServices.markTodoState(todoGroupID: todoGroup.id, todoID: todoID);
+    setState(() {
+      todoGroup = userServices.getTodoGroupByID(todoGroup.id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -107,9 +118,9 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
                   child: Padding(
                     padding: const EdgeInsets.all(18.0),
                     child: Text(
-                      widget.todoGroup.title,
+                      todoGroup.title,
                       style: Theme.of(context).textTheme.headline4.copyWith(
-                            color: Color(widget.todoGroup.color),
+                            color: Color(todoGroup.color),
                           ),
                     ),
                   ),
@@ -129,7 +140,7 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
                         context,
                         MaterialPageRoute(
                           builder: (context) => TodoGroupEditPage(
-                            todoGroupID: widget.todoGroup.id,
+                            todoGroupID: todoGroup.id,
                           ),
                         ),
                       );
@@ -145,17 +156,19 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
           axisAlignment: -1,
           child: Container(
             child: Center(
-              child: widget.todoGroup.todos.length > 0
+              child: todoGroup.todos.length > 0
                   ? ListView.builder(
-                      // TODO: Permitir marcar o todo como finalizado
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: widget.todoGroup.todos.length,
+                      itemCount: todoGroup.todos.length,
                       itemBuilder: (BuildContext context, int index) {
                         return TodoComponent(
-                          todo: widget.todoGroup.todos[index],
-                          color: widget.todoGroup.color,
-                        );
+                            todo: todoGroup.todos[index],
+                            color: todoGroup.color,
+                            onTap: () {
+                              _markTodoStatus(
+                                  todoID: todoGroup.todos[index].id);
+                            });
                       },
                     )
                   : AllDone(),

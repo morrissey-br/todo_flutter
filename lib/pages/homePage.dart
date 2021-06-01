@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: (BuildContext context, int index) {
           return TodoGroupComponent(
             index: index,
-            todoGroup: todoGroup[index],
+            todoGroupID: todoGroup[index].id,
             isLast: index == todoGroup.length - 1 ? true : false,
           );
         },

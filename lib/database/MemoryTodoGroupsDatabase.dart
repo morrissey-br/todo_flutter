@@ -43,7 +43,7 @@ class MemoryTodoGroupsDatabase implements TodoGroupRepository {
     final dateTodo = Todo.create(text: 'Diner with Carol');
 
     final doneTodo = Todo.create(text: 'Print boarding pass');
-    doneTodo.complete();
+    doneTodo.changeStatus();
 
     todoGroup2.add(dateTodo);
     todoGroup2.add(Todo.create(text: 'Book hotel'));
