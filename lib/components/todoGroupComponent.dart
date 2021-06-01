@@ -147,6 +147,7 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
             child: Center(
               child: widget.todoGroup.todos.length > 0
                   ? ListView.builder(
+                      // TODO: Permitir marcar o todo como finalizado
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: widget.todoGroup.todos.length,

@@ -66,6 +66,7 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
                 ),
                 Divider(),
                 ListTile(
+                  // TODO: Pagina para editar nome do grupo
                   leading: Icon(Icons.title),
                   title: Text('Título'),
                   subtitle: Text(todoGroup.title),
@@ -73,6 +74,7 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
                   onTap: () {},
                 ),
                 ListTile(
+                  // TODO: Pagina pra editar a cor do grupo
                   leading: Icon(Icons.color_lens),
                   title: Text('Cor'),
                   subtitle: Align(
@@ -105,6 +107,7 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
                   ),
                   Divider(),
                   Expanded(
+                    // TODO: Opção de excluir o todo do grupo
                     child: ReorderableListView.builder(
                       onReorder: (int oldIndex, int newIndex) {
                         reorderTodo(oldIndex, newIndex);

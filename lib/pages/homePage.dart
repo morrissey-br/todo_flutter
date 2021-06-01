@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
         title: Text('Hello.'),
         actions: [
           IconButton(
+            // TODO: Criar pagina de configurações do app
             icon: Icon(Icons.settings),
             onPressed: () {
               // Navigator.push(
