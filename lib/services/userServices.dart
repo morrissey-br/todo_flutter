@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:todo_flutter/database/MemoryTodoGroupsDatabase.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
 import 'package:todo_flutter/model/TodoGroupRepository.dart';
@@ -35,6 +36,11 @@ class UserServices {
       {String todoGroupID, String todoID, int newTodoPosition}) {
     TodoGroup aTodoGroup = _todoGroupRepository.getByID(todoGroupID);
     aTodoGroup.reorderTodo(todoID: todoID, newTodoPosition: newTodoPosition);
+  }
+
+  void changeTodoGroupTitle({String todoGroupID, String newTitle}) {
+    TodoGroup aTodoGroup = _todoGroupRepository.getByID(todoGroupID);
+    aTodoGroup.changeTodoGroupTitle(newTitle: newTitle);
   }
 
   void markTodoState({String todoGroupID, String todoID}) {

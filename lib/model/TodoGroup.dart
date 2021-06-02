@@ -21,9 +21,13 @@ class TodoGroup {
     todos.removeWhere((todo) => todo.id == aTodo.id);
   }
 
-  reorderTodo({String todoID, int newTodoPosition}) {
+  void reorderTodo({String todoID, int newTodoPosition}) {
     Todo changingPositionTodo = todos.firstWhere((todo) => todo.id == todoID);
     todos.removeWhere((todo) => todo.id == todoID);
     todos.insert(newTodoPosition - 1, changingPositionTodo);
+  }
+
+  void changeTodoGroupTitle({String newTitle}) {
+    title = newTitle;
   }
 }
