@@ -45,6 +45,12 @@ class UserServices {
     aTodoGroup.changeTodoGroupTitle(newTitle: newTitle);
   }
 
+  void changeTodoGroupColor(
+      {required String todoGroupID, required int newColor}) {
+    TodoGroup aTodoGroup = _todoGroupRepository.getByID(todoGroupID);
+    aTodoGroup.changeTodoGroupColor(newColor: newColor);
+  }
+
   void markTodoState({required String todoGroupID, required String todoID}) {
     TodoGroup aTodoGroup = _todoGroupRepository.getByID(todoGroupID);
     aTodoGroup.todos.firstWhere((todo) => todo.id == todoID).changeStatus();

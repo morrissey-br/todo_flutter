@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
       builder: (BuildContext context) {
         return AddTodoGroupAlert(
           doneCallBack: (String text) {
-            userServices.addTodoGroup(title: text, color: Colors.black.value);
+            userServices.addTodoGroup(title: text, color: Colors.blue.value);
             setState(() {
               todoGroup = userServices.getAllTodoGroups();
             });

@@ -34,4 +34,8 @@ class TodoGroup {
   void changeTodoGroupTitle({required String newTitle}) {
     title = newTitle;
   }
+
+  void changeTodoGroupColor({required int newColor}) {
+    color = newColor;
+  }
 }

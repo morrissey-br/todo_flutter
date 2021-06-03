@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/components/addTodoAlert.dart';
+import 'package:todo_flutter/components/changeTodoGroupColorAlert.dart';
 import 'package:todo_flutter/components/changeTodoGroupTitleAlert.dart';
 import 'package:todo_flutter/main.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
@@ -66,6 +67,25 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
     );
   }
 
+  Future<void> openChangeTodoGroupColorAlert() {
+    return showDialog(
+      context: context, // user must tap button!
+      builder: (BuildContext context) {
+        return ChangeTodoGroupColorAlert(
+          todoColor: todoGroup.color,
+          doneCallBack: ({required int newColor}) {
+            userServices.changeTodoGroupColor(
+                todoGroupID: widget.todoGroupID, newColor: newColor);
+            setState(() {
+              todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
+            });
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,7 +127,9 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
                     ),
                   ),
                   trailing: Icon(Icons.arrow_forward),
-                  onTap: () {},
+                  onTap: () {
+                    openChangeTodoGroupColorAlert();
+                  },
                 ),
               ],
             ),
