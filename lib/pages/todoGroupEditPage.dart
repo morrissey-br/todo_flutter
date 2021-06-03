@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_flutter/components/addTodoAlert.dart';
 import 'package:todo_flutter/components/changeTodoGroupColorAlert.dart';
 import 'package:todo_flutter/components/changeTodoGroupTitleAlert.dart';
+import 'package:todo_flutter/components/confirmDeleteTodoAlert.dart';
 import 'package:todo_flutter/main.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
 
@@ -25,9 +26,40 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
 
   void reorderTodo(int oldIndex, int newIndex) {
     var aTodo = todoGroup.todos[oldIndex];
-    todoGroup.reorderTodo(
+    userServices.reorderTodoOnGroup(
+        todoGroupID: todoGroup.id,
         todoID: aTodo.id,
         newTodoPosition: oldIndex > newIndex ? newIndex + 1 : newIndex);
+    setState(() {
+      todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
+    });
+  }
+
+  void deleteTodo({required String todoID}) {
+    userServices.deleteTodoOnGroup(todoGroupID: todoGroup.id, todoID: todoID);
+    setState(() {
+      todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
+    });
+  }
+
+  Future<void> openDeleteTodoAlert({required String todoID}) {
+    return showDialog(
+      context: context, // user must tap button!
+      builder: (BuildContext context) {
+        return ConfirmDeleteTodoAlert(
+          doneCallBack: ({required bool confirm}) {
+            if (confirm) {
+              userServices.deleteTodoOnGroup(
+                  todoGroupID: todoGroup.id, todoID: todoID);
+              setState(() {
+                todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
+              });
+            }
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
   }
 
   Future<void> openAddTodoCard() {
@@ -142,6 +174,7 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
                       'Todos',
                       style: Theme.of(context).textTheme.headline6,
                     ),
+                    subtitle: Text('Segure e arraste para reordenar'),
                     trailing: Icon(Icons.add),
                     onTap: () {
                       openAddTodoCard();
@@ -149,7 +182,6 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
                   ),
                   Divider(),
                   Expanded(
-                    // TODO: Opção de excluir o todo do grupo
                     child: ReorderableListView.builder(
                       onReorder: (int oldIndex, int newIndex) {
                         reorderTodo(oldIndex, newIndex);
@@ -159,7 +191,11 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
                         return ListTile(
                           key: ValueKey(index),
                           title: Text(todoGroup.todos[index].text),
-                          trailing: Icon(Icons.drag_indicator),
+                          trailing: Icon(Icons.close),
+                          onTap: () {
+                            openDeleteTodoAlert(
+                                todoID: todoGroup.todos[index].id);
+                          },
                         );
                       },
                     ),

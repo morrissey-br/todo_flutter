@@ -55,4 +55,11 @@ class UserServices {
     TodoGroup aTodoGroup = _todoGroupRepository.getByID(todoGroupID);
     aTodoGroup.todos.firstWhere((todo) => todo.id == todoID).changeStatus();
   }
+
+  void deleteTodoOnGroup(
+      {required String todoGroupID, required String todoID}) {
+    TodoGroup aTodoGroup = _todoGroupRepository.getByID(todoGroupID);
+    Todo aTodo = aTodoGroup.getTodoByID(todoID);
+    aTodoGroup.remove(aTodo);
+  }
 }

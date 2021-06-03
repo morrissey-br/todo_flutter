@@ -25,6 +25,10 @@ class TodoGroup {
     todos.removeWhere((todo) => todo.id == aTodo.id);
   }
 
+  Todo getTodoByID(String aTodoID) {
+    return todos.firstWhere((todo) => todo.id == aTodoID);
+  }
+
   void reorderTodo({required String todoID, required int newTodoPosition}) {
     Todo changingPositionTodo = todos.firstWhere((todo) => todo.id == todoID);
     todos.removeWhere((todo) => todo.id == todoID);
