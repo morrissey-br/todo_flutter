@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 class AddTodoGroupAlert extends StatefulWidget {
   final void Function(String text) doneCallBack;
 
-  const AddTodoGroupAlert({Key key, this.doneCallBack}) : super(key: key);
+  const AddTodoGroupAlert({Key? key, required this.doneCallBack})
+      : super(key: key);
 
   @override
   _AddTodoGroupAlertState createState() => _AddTodoGroupAlertState();
 }
 
 class _AddTodoGroupAlertState extends State<AddTodoGroupAlert> {
-  String _textField;
+  String _textField = '';
 
   changeText(String text) {
     setState(() {

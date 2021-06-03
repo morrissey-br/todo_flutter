@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<TodoGroup> todoGroup;
+  late List<TodoGroup> todoGroup;
 
   @override
   initState() {
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
               //       builder: (BuildContext context) => TodoGroupEdit()),
               // );
             },
-            iconSize: Theme.of(context).iconTheme.size,
+            iconSize: Theme.of(context).iconTheme.size ?? 24,
             padding: EdgeInsets.symmetric(horizontal: 20),
           ),
           IconButton(
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
               _abrirCardDeAdicao();
             },
             // FIXME: Colocado aqui e não no tema por conta de um bug no Flutter. #58752 já corrigidio, esperando release.
-            iconSize: Theme.of(context).iconTheme.size,
+            iconSize: Theme.of(context).iconTheme.size ?? 24,
             padding: EdgeInsets.symmetric(horizontal: 20),
           ),
         ],

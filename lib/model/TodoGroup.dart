@@ -7,9 +7,13 @@ class TodoGroup {
   int color;
   List<Todo> todos;
 
-  TodoGroup._({this.id, this.title, this.color, this.todos});
+  TodoGroup._(
+      {required this.id,
+      required this.title,
+      required this.color,
+      required this.todos});
 
-  static TodoGroup create({String title, int color}) {
+  static TodoGroup create({required String title, required int color}) {
     return TodoGroup._(id: Uuid().v1(), title: title, color: color, todos: []);
   }
 
@@ -21,13 +25,13 @@ class TodoGroup {
     todos.removeWhere((todo) => todo.id == aTodo.id);
   }
 
-  void reorderTodo({String todoID, int newTodoPosition}) {
+  void reorderTodo({required String todoID, required int newTodoPosition}) {
     Todo changingPositionTodo = todos.firstWhere((todo) => todo.id == todoID);
     todos.removeWhere((todo) => todo.id == todoID);
     todos.insert(newTodoPosition - 1, changingPositionTodo);
   }
 
-  void changeTodoGroupTitle({String newTitle}) {
+  void changeTodoGroupTitle({required String newTitle}) {
     title = newTitle;
   }
 }

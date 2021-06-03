@@ -10,7 +10,11 @@ class TodoGroupComponent extends StatefulWidget {
   final String todoGroupID;
   final bool isLast;
 
-  const TodoGroupComponent({Key key, this.index, this.todoGroupID, this.isLast})
+  const TodoGroupComponent(
+      {Key? key,
+      required this.index,
+      required this.todoGroupID,
+      required this.isLast})
       : super(key: key);
 
   @override
@@ -19,11 +23,11 @@ class TodoGroupComponent extends StatefulWidget {
 
 class _TodoGroupComponentState extends State<TodoGroupComponent>
     with TickerProviderStateMixin {
-  TodoGroup todoGroup;
+  late TodoGroup todoGroup;
   bool isOpen = false;
 
-  AnimationController _controller;
-  Animation<double> _animation;
+  late AnimationController _controller;
+  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -83,7 +87,7 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
     }
   }
 
-  void _markTodoStatus({String todoID}) {
+  void _markTodoStatus({required String todoID}) {
     userServices.markTodoState(todoGroupID: todoGroup.id, todoID: todoID);
     setState(() {
       todoGroup = userServices.getTodoGroupByID(todoGroup.id);
@@ -119,7 +123,7 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
                     padding: const EdgeInsets.all(18.0),
                     child: Text(
                       todoGroup.title,
-                      style: Theme.of(context).textTheme.headline4.copyWith(
+                      style: Theme.of(context).textTheme.headline4?.copyWith(
                             color: Color(todoGroup.color),
                           ),
                     ),

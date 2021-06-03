@@ -8,7 +8,7 @@ class AllDone extends StatelessWidget {
       child: Center(
         child: Text(
           'All done!',
-          style: Theme.of(context).textTheme.headline6.copyWith(
+          style: Theme.of(context).textTheme.headline6?.copyWith(
                 color: Colors.grey,
                 decoration: TextDecoration.underline,
               ),

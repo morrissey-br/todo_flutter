@@ -6,7 +6,9 @@ class TodoComponent extends StatelessWidget {
   final int color;
   final Function onTap;
 
-  TodoComponent({Key key, this.todo, this.color, this.onTap}) : super(key: key);
+  TodoComponent(
+      {Key? key, required this.todo, required this.color, required this.onTap})
+      : super(key: key);
 
   final doneTodoTextStyle = TextStyle(
     color: Colors.grey,
@@ -16,7 +18,9 @@ class TodoComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        onTap();
+      },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 40, vertical: 32),
         child: Row(
@@ -34,7 +38,7 @@ class TodoComponent extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .headline6
-                  .merge(todo.status ? doneTodoTextStyle : null),
+                  ?.merge(todo.status ? doneTodoTextStyle : null),
             ),
           ],
         ),

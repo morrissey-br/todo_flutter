@@ -8,13 +8,13 @@ import 'package:todo_flutter/model/TodoGroup.dart';
 class TodoGroupEditPage extends StatefulWidget {
   final String todoGroupID;
 
-  TodoGroupEditPage({Key key, this.todoGroupID}) : super(key: key);
+  TodoGroupEditPage({Key? key, required this.todoGroupID}) : super(key: key);
   @override
   _TodoGroupEditPageState createState() => _TodoGroupEditPageState();
 }
 
 class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
-  TodoGroup todoGroup;
+  late TodoGroup todoGroup;
 
   @override
   void initState() {

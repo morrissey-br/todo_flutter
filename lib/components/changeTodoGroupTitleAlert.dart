@@ -4,7 +4,8 @@ class ChangeTodoGroupTitleAlert extends StatefulWidget {
   final String todoTitle;
   final void Function(String text) doneCallBack;
 
-  const ChangeTodoGroupTitleAlert({Key key, this.todoTitle, this.doneCallBack})
+  const ChangeTodoGroupTitleAlert(
+      {Key? key, required this.todoTitle, required this.doneCallBack})
       : super(key: key);
 
   @override
@@ -12,7 +13,7 @@ class ChangeTodoGroupTitleAlert extends StatefulWidget {
 }
 
 class _AddTodoAlertState extends State<ChangeTodoGroupTitleAlert> {
-  TextEditingController _textFieldController;
+  late TextEditingController _textFieldController;
 
   @override
   void initState() {
