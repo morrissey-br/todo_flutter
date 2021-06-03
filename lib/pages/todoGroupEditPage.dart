@@ -115,7 +115,6 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
                   },
                 ),
                 ListTile(
-                  // TODO: Pagina pra editar a cor do grupo
                   leading: Icon(Icons.color_lens),
                   title: Text('Cor'),
                   subtitle: Align(
