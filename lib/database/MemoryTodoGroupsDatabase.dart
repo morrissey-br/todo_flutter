@@ -3,6 +3,7 @@ import 'package:todo_flutter/model/Todo.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
 import 'package:todo_flutter/model/TodoGroupRepository.dart';
 
+// TODO: Criar DB que salve no dispositivo
 class MemoryTodoGroupsDatabase implements TodoGroupRepository {
   late List<TodoGroup> _todoGroups;
 

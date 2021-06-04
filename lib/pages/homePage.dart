@@ -6,6 +6,7 @@ import 'dart:async';
 import '../components/addTodoGroupAlert.dart';
 import '../main.dart';
 
+// TODO: Criar página que explica o app (depois do lançamento do beta)
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
