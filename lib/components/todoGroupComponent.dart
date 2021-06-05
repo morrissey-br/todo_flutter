@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_flutter/components/allDoneComponent.dart';
+import 'package:todo_flutter/components/backgroundMessage.dart';
 import 'package:todo_flutter/components/todoComponent.dart';
 import 'package:todo_flutter/main.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
@@ -175,7 +175,9 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
                             });
                       },
                     )
-                  : AllDone(),
+                  : BackgroundMessage(
+                      message: 'Tudo feito!',
+                    ),
             ),
           ),
         ),

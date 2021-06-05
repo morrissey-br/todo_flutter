@@ -122,7 +122,7 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Editar grupo:'),
+        title: Text('Editar grupo'),
         toolbarHeight: 75,
       ),
       body: Column(

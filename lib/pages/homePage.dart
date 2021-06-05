@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/components/todoGroupComponent.dart';
 import 'package:todo_flutter/model/TodoGroup.dart';
+import 'package:todo_flutter/pages/appConfigurationPage.dart';
 import 'dart:async';
 
 import '../components/addTodoGroupAlert.dart';
@@ -50,11 +51,11 @@ class _HomePageState extends State<HomePage> {
             // TODO: Criar pagina de configurações do app
             icon: Icon(Icons.settings),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (BuildContext context) => TodoGroupEdit()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => AppConfigurationPage()),
+              );
             },
             iconSize: Theme.of(context).iconTheme.size ?? 24,
             padding: EdgeInsets.symmetric(horizontal: 20),
