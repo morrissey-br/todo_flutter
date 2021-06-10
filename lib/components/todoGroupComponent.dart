@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/components/backgroundMessage.dart';
 import 'package:todo_flutter/components/todoComponent.dart';
-import 'package:todo_flutter/main.dart';
-import 'package:todo_flutter/model/TodoGroup.dart';
 import 'package:todo_flutter/pages/todoGroupEditPage.dart';
+import 'package:todo_flutter/api/dtos/TodoGroupDTO.dart';
 
 class TodoGroupComponent extends StatefulWidget {
   final int index;
-  final String todoGroupID;
+  final TodoGroupDTO todoGroup;
   final bool isLast;
+  final void Function({required String todoGroupID, required String todoID})
+      onTodoClick;
+  final Function onEditReturn;
 
   const TodoGroupComponent(
       {Key? key,
       required this.index,
-      required this.todoGroupID,
-      required this.isLast})
+      required this.todoGroup,
+      required this.isLast,
+      required this.onTodoClick,
+      required this.onEditReturn})
       : super(key: key);
 
   @override
@@ -23,7 +27,6 @@ class TodoGroupComponent extends StatefulWidget {
 
 class _TodoGroupComponentState extends State<TodoGroupComponent>
     with TickerProviderStateMixin {
-  late TodoGroup todoGroup;
   bool isOpen = false;
 
   late AnimationController _controller;
@@ -31,8 +34,6 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
 
   @override
   void initState() {
-    todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
-
     _controller = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 200),
@@ -61,18 +62,6 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
     super.dispose();
   }
 
-  // FIXME: Estuda isso aqui q eu nem sei como funciona...
-  // FIXME: Aprendi no link: https://medium.com/sk-geek/flutter-experiment-to-trigger-animation-when-parent-setstate-84e949530b64
-  // @override
-  // void didUpdateWidget(TodoGroupComponent oldTodoGroupComponent) {
-  //   if (isOpen) {
-  //     _controller.forward();
-  //   } else {
-  //     _controller.reverse();
-  //   }
-  //   super.didUpdateWidget(oldTodoGroupComponent);
-  // }
-
   void _openClose() {
     if (widget.isLast) {
       return;
@@ -85,13 +74,6 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
     } else {
       _controller.reverse();
     }
-  }
-
-  void _markTodoStatus({required String todoID}) {
-    userServices.markTodoState(todoGroupID: todoGroup.id, todoID: todoID);
-    setState(() {
-      todoGroup = userServices.getTodoGroupByID(todoGroup.id);
-    });
   }
 
   @override
@@ -122,9 +104,9 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
                   child: Padding(
                     padding: const EdgeInsets.all(18.0),
                     child: Text(
-                      todoGroup.title,
+                      widget.todoGroup.title,
                       style: Theme.of(context).textTheme.headline4?.copyWith(
-                            color: Color(todoGroup.color),
+                            color: Color(widget.todoGroup.color),
                           ),
                     ),
                   ),
@@ -144,10 +126,12 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
                         context,
                         MaterialPageRoute(
                           builder: (context) => TodoGroupEditPage(
-                            todoGroupID: todoGroup.id,
+                            todoGroupID: widget.todoGroup.id,
                           ),
                         ),
-                      );
+                      ).then((value) {
+                        widget.onEditReturn();
+                      });
                     },
                   ),
                 ),
@@ -160,18 +144,19 @@ class _TodoGroupComponentState extends State<TodoGroupComponent>
           axisAlignment: -1,
           child: Container(
             child: Center(
-              child: todoGroup.todos.length > 0
+              child: widget.todoGroup.todos.length > 0
                   ? ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: todoGroup.todos.length,
+                      itemCount: widget.todoGroup.todos.length,
                       itemBuilder: (BuildContext context, int index) {
                         return TodoComponent(
-                            todo: todoGroup.todos[index],
-                            color: todoGroup.color,
+                            todo: widget.todoGroup.todos[index],
+                            color: widget.todoGroup.color,
                             onTap: () {
-                              _markTodoStatus(
-                                  todoID: todoGroup.todos[index].id);
+                              widget.onTodoClick(
+                                  todoGroupID: widget.todoGroup.id,
+                                  todoID: widget.todoGroup.todos[index].id);
                             });
                       },
                     )

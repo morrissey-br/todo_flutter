@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:todo_flutter/model/Todo.dart';
+import 'package:todo_flutter/api/dtos/TodoDTO.dart';
 
 class TodoComponent extends StatelessWidget {
-  final Todo todo;
+  final TodoDTO todo;
   final int color;
   final Function onTap;
 

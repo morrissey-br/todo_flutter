@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_flutter/components/todoGroupComponent.dart';
-import 'package:todo_flutter/model/TodoGroup.dart';
 import 'package:todo_flutter/pages/appConfigurationPage.dart';
+import 'package:todo_flutter/api/dtos/TodoGroupDTO.dart';
 import 'dart:async';
 
 import '../components/addTodoGroupAlert.dart';
@@ -14,12 +14,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<TodoGroup> todoGroup;
+  late List<TodoGroupDTO> todoGroup;
 
   @override
-  initState() {
-    todoGroup = userServices.getAllTodoGroups();
+  void initState() {
+    todoGroup = domainPresenter.getAllTodoGroups();
     super.initState();
+  }
+
+  void _updateState() {
+    setState(() {
+      todoGroup = domainPresenter.getAllTodoGroups();
+    });
   }
 
   Future<void> _abrirCardDeAdicao() {
@@ -28,15 +34,21 @@ class _HomePageState extends State<HomePage> {
       builder: (BuildContext context) {
         return AddTodoGroupAlert(
           doneCallBack: (String text) {
-            userServices.addTodoGroup(title: text, color: Colors.blue.value);
+            domainController.createNewTodoGroup(
+                title: text, color: Colors.blue.value);
             setState(() {
-              todoGroup = userServices.getAllTodoGroups();
+              todoGroup = domainPresenter.getAllTodoGroups();
             });
             Navigator.of(context).pop();
           },
         );
       },
     );
+  }
+
+  void _onTodoClick({required String todoGroupID, required String todoID}) {
+    domainController.changeTodoStatus(todoGroupID: todoGroupID, todoID: todoID);
+    _updateState();
   }
 
   @override
@@ -48,7 +60,6 @@ class _HomePageState extends State<HomePage> {
         title: Text('Hello.'),
         actions: [
           IconButton(
-            // TODO: Criar pagina de configurações do app
             icon: Icon(Icons.settings),
             onPressed: () {
               Navigator.push(
@@ -65,7 +76,6 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               _abrirCardDeAdicao();
             },
-            // FIXME: Colocado aqui e não no tema por conta de um bug no Flutter. #58752 já corrigidio, esperando release.
             iconSize: Theme.of(context).iconTheme.size ?? 24,
             padding: EdgeInsets.symmetric(horizontal: 20),
           ),
@@ -78,8 +88,15 @@ class _HomePageState extends State<HomePage> {
         itemBuilder: (BuildContext context, int index) {
           return TodoGroupComponent(
             index: index,
-            todoGroupID: todoGroup[index].id,
+            todoGroup: todoGroup[index],
             isLast: index == todoGroup.length - 1 ? true : false,
+            onTodoClick: (
+                {required String todoGroupID, required String todoID}) {
+              _onTodoClick(todoGroupID: todoGroupID, todoID: todoID);
+            },
+            onEditReturn: () {
+              _updateState();
+            },
           );
         },
       ),

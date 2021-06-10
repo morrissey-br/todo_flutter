@@ -5,7 +5,7 @@ import 'package:todo_flutter/components/changeTodoGroupColorAlert.dart';
 import 'package:todo_flutter/components/changeTodoGroupTitleAlert.dart';
 import 'package:todo_flutter/components/confirmDeleteTodoAlert.dart';
 import 'package:todo_flutter/main.dart';
-import 'package:todo_flutter/model/TodoGroup.dart';
+import 'package:todo_flutter/api/dtos/TodoGroupDTO.dart';
 
 class TodoGroupEditPage extends StatefulWidget {
   final String todoGroupID;
@@ -16,45 +16,38 @@ class TodoGroupEditPage extends StatefulWidget {
 }
 
 class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
-  late TodoGroup todoGroup;
+  late TodoGroupDTO todoGroup;
 
   @override
   void initState() {
-    todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
+    todoGroup = domainPresenter.getTodoGroupByID(widget.todoGroupID);
     super.initState();
+  }
+
+  void _updateState() {
+    setState(() {
+      todoGroup = domainPresenter.getTodoGroupByID(widget.todoGroupID);
+    });
   }
 
   void reorderTodo(int oldIndex, int newIndex) {
     var aTodo = todoGroup.todos[oldIndex];
-    userServices.reorderTodoOnGroup(
+    domainController.reorderTodoOnGroup(
         todoGroupID: todoGroup.id,
         todoID: aTodo.id,
         newTodoPosition: oldIndex > newIndex ? newIndex + 1 : newIndex);
-    setState(() {
-      todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
-    });
+    _updateState();
   }
 
-  void deleteTodo({required String todoID}) {
-    userServices.deleteTodoOnGroup(todoGroupID: todoGroup.id, todoID: todoID);
-    setState(() {
-      todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
-    });
-  }
-
-  Future<void> openDeleteTodoAlert({required String todoID}) {
+  Future<void> openAddTodoAlert() {
     return showDialog(
       context: context, // user must tap button!
       builder: (BuildContext context) {
-        return ConfirmDeleteTodoAlert(
-          doneCallBack: ({required bool confirm}) {
-            if (confirm) {
-              userServices.deleteTodoOnGroup(
-                  todoGroupID: todoGroup.id, todoID: todoID);
-              setState(() {
-                todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
-              });
-            }
+        return AddTodoAlert(
+          doneCallBack: (String text) {
+            domainController.createNewTodoOnGroup(
+                todoGroupID: widget.todoGroupID, text: text);
+            _updateState();
             Navigator.of(context).pop();
           },
         );
@@ -62,20 +55,18 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
     );
   }
 
-  Future<void> openAddTodoCard() {
+  Future<void> openDeleteTodoAlert({required String todoID}) {
     return showDialog(
       context: context, // user must tap button!
       builder: (BuildContext context) {
-        return AddTodoAlert(
-          doneCallBack: (String text) {
-            userServices.addTodoToGroup(
-                todoGroupID: widget.todoGroupID, todoText: text);
-            setState(() {
-              todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
-            });
-            Navigator.of(context).pop();
-          },
-        );
+        return ConfirmDeleteTodoAlert(doneCallBack: ({required bool confirm}) {
+          if (confirm) {
+            domainController.deleteTodoOnGroup(
+                todoGroupID: todoGroup.id, todoID: todoID);
+            _updateState();
+          }
+          Navigator.of(context).pop();
+        });
       },
     );
   }
@@ -87,11 +78,9 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
         return ChangeTodoGroupTitleAlert(
           todoTitle: todoGroup.title,
           doneCallBack: (String text) {
-            userServices.changeTodoGroupTitle(
+            domainController.changeTodoGroupTitle(
                 todoGroupID: widget.todoGroupID, newTitle: text);
-            setState(() {
-              todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
-            });
+            _updateState();
             Navigator.of(context).pop();
           },
         );
@@ -106,11 +95,9 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
         return ChangeTodoGroupColorAlert(
           todoColor: todoGroup.color,
           doneCallBack: ({required int newColor}) {
-            userServices.changeTodoGroupColor(
+            domainController.changeTodoGroupColor(
                 todoGroupID: widget.todoGroupID, newColor: newColor);
-            setState(() {
-              todoGroup = userServices.getTodoGroupByID(widget.todoGroupID);
-            });
+            _updateState();
             Navigator.of(context).pop();
           },
         );
@@ -177,7 +164,7 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
                     subtitle: Text('Segure e arraste para reordenar'),
                     trailing: Icon(Icons.add),
                     onTap: () {
-                      openAddTodoCard();
+                      openAddTodoAlert();
                     },
                   ),
                   Divider(),
