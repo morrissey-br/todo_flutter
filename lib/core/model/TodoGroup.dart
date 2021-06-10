@@ -13,7 +13,11 @@ class TodoGroup extends Entity<TodoGroup> {
   }
 
   static TodoGroup fromMap(Map<String, dynamic> map) {
-    return TodoGroup._(map['id'], map['title'], map['color'], map['todos']);
+    List<Map<String, dynamic>> todosMapList =
+        map['todos'] as List<Map<String, dynamic>>;
+    List<Todo> todos =
+        todosMapList.map((todoMap) => Todo.fromMap(todoMap)).toList();
+    return TodoGroup._(map['id'], map['title'], map['color'], todos);
   }
 
   String get title {
@@ -30,11 +34,14 @@ class TodoGroup extends Entity<TodoGroup> {
 
   @override
   Map<String, dynamic> toMap() {
+    List<Map<String, dynamic>> todosListMap = _todos.map((todo) {
+      return todo.toMap();
+    }).toList();
     return {
       'id': id,
       'title': _title,
       'color': _color,
-      'todos': _todos,
+      'todos': todosListMap,
     };
   }
 
