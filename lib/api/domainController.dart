@@ -1,61 +1,60 @@
-import 'package:todo_flutter/core/gateways/DBContext.dart';
-import 'package:todo_flutter/core/gateways/IDGenerator.dart';
-import 'package:todo_flutter/core/services/TodoGroupManager.dart';
+import 'package:todo_flutter/core/domain/repositories/TodoGroupRepo.dart';
+import 'package:todo_flutter/core/domain/services/TodoGroupManager.dart';
 
 class DomainController {
   TodoGroupManager _todoGroupManager;
 
   DomainController._(this._todoGroupManager);
 
-  static DomainController instantiate(
-      DBContext dbContext, IDGenerator idGenerator) {
-    TodoGroupManager todoGroupManager =
-        TodoGroupManager.instantiate(dbContext, idGenerator);
+  static DomainController instantiate(TodoGroupRepo todoGroupRepo) {
+    TodoGroupManager todoGroupManager = TodoGroupManager(todoGroupRepo);
     return DomainController._(todoGroupManager);
   }
 
-  void createNewTodoGroup({required String title, required int color}) {
-    _todoGroupManager.createNewTodoGroup(title: title, color: color);
+  Future<void> createNewTodoGroup(
+      {required String title, required int color}) async {
+    await _todoGroupManager.createNewTodoGroup(title: title, color: color);
   }
 
-  void deleteTodoGroupByID({required String id}) {
-    _todoGroupManager.deleteTodoGroupByID(id: id);
+  Future<void> deleteTodoGroupByID({required String id}) async {
+    await _todoGroupManager.deleteTodoGroupByID(id: id);
   }
 
-  void changeTodoGroupTitle(
-      {required String todoGroupID, required String newTitle}) {
-    _todoGroupManager.changeTodoGroupTitle(
+  Future<void> changeTodoGroupTitle(
+      {required String todoGroupID, required String newTitle}) async {
+    await _todoGroupManager.changeTodoGroupTitle(
         todoGroupID: todoGroupID, newTitle: newTitle);
   }
 
-  void changeTodoGroupColor(
-      {required String todoGroupID, required int newColor}) {
-    _todoGroupManager.changeTodoGroupColor(
+  Future<void> changeTodoGroupColor(
+      {required String todoGroupID, required int newColor}) async {
+    await _todoGroupManager.changeTodoGroupColor(
         todoGroupID: todoGroupID, newColor: newColor);
   }
 
-  void createNewTodoOnGroup(
-      {required String todoGroupID, required String text}) {
-    _todoGroupManager.createNewTodoOnGroup(
+  Future<void> createNewTodoOnGroup(
+      {required String todoGroupID, required String text}) async {
+    await _todoGroupManager.createNewTodoOnGroup(
         todoGroupID: todoGroupID, text: text);
   }
 
-  void deleteTodoOnGroup(
-      {required String todoGroupID, required String todoID}) {
-    _todoGroupManager.deleteTodoOnGroup(
+  Future<void> deleteTodoOnGroup(
+      {required String todoGroupID, required String todoID}) async {
+    await _todoGroupManager.deleteTodoOnGroup(
         todoGroupID: todoGroupID, todoID: todoID);
   }
 
-  void changeTodoStatus({required String todoGroupID, required String todoID}) {
-    _todoGroupManager.changeTodoStatus(
+  Future<void> changeTodoStatus(
+      {required String todoGroupID, required String todoID}) async {
+    await _todoGroupManager.changeTodoStatus(
         todoGroupID: todoGroupID, todoID: todoID);
   }
 
-  void reorderTodoOnGroup(
+  Future<void> reorderTodoOnGroup(
       {required String todoGroupID,
       required String todoID,
-      required int newTodoPosition}) {
-    _todoGroupManager.reorderTodoOnGroup(
+      required int newTodoPosition}) async {
+    await _todoGroupManager.reorderTodoOnGroup(
         todoGroupID: todoGroupID,
         todoID: todoID,
         newTodoPosition: newTodoPosition);

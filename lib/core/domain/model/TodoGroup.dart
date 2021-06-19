@@ -1,5 +1,6 @@
-import 'package:todo_flutter/core/concepts/Entity.dart';
-import 'package:todo_flutter/core/model/Todo.dart';
+import 'package:todo_flutter/core/domain/concepts/Entity.dart';
+
+import 'Todo.dart';
 
 class TodoGroup extends Entity<TodoGroup> {
   String _title;
@@ -30,19 +31,6 @@ class TodoGroup extends Entity<TodoGroup> {
 
   List<Todo> get todos {
     return _todos;
-  }
-
-  @override
-  Map<String, dynamic> toMap() {
-    List<Map<String, dynamic>> todosListMap = _todos.map((todo) {
-      return todo.toMap();
-    }).toList();
-    return {
-      'id': id,
-      'title': _title,
-      'color': _color,
-      'todos': todosListMap,
-    };
   }
 
   void add(Todo aTodo) {

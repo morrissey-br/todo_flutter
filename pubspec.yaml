@@ -33,6 +33,7 @@ dependencies:
   google_fonts: ^2.0.0
   flex_color_picker: ^2.0.0
   shared_preferences: ^2.0.6
+  sqflite: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:

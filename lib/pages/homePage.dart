@@ -14,17 +14,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late List<TodoGroupDTO> todoGroup;
+  List<TodoGroupDTO> todoGroups = [];
 
   @override
   void initState() {
-    todoGroup = domainPresenter.getAllTodoGroups();
+    domainPresenter.getAllTodoGroups().then((todoGroupsDTOs) {
+      setState(() {
+        todoGroups = todoGroupsDTOs;
+      });
+    });
     super.initState();
   }
 
   void _updateState() {
-    setState(() {
-      todoGroup = domainPresenter.getAllTodoGroups();
+    domainPresenter.getAllTodoGroups().then((todoGroupsDTOs) {
+      setState(() {
+        todoGroups = todoGroupsDTOs;
+      });
     });
   }
 
@@ -36,10 +42,12 @@ class _HomePageState extends State<HomePage> {
           doneCallBack: (String text) {
             domainController.createNewTodoGroup(
                 title: text, color: Colors.blue.value);
-            setState(() {
-              todoGroup = domainPresenter.getAllTodoGroups();
+            domainPresenter.getAllTodoGroups().then((todoGroupsDTOs) {
+              setState(() {
+                todoGroups = todoGroupsDTOs;
+              });
+              Navigator.of(context).pop();
             });
-            Navigator.of(context).pop();
           },
         );
       },
@@ -83,13 +91,13 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView.builder(
         padding: EdgeInsets.only(top: 8),
-        itemCount: todoGroup.length,
+        itemCount: todoGroups.length,
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) {
           return TodoGroupComponent(
             index: index,
-            todoGroup: todoGroup[index],
-            isLast: index == todoGroup.length - 1 ? true : false,
+            todoGroup: todoGroups[index],
+            isLast: index == todoGroups.length - 1 ? true : false,
             onTodoClick: (
                 {required String todoGroupID, required String todoID}) {
               _onTodoClick(todoGroupID: todoGroupID, todoID: todoID);

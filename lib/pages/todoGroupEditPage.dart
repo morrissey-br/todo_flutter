@@ -16,27 +16,33 @@ class TodoGroupEditPage extends StatefulWidget {
 }
 
 class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
-  late TodoGroupDTO todoGroup;
+  TodoGroupDTO todoGroup = TodoGroupDTO(id: '', title: '', color: 0, todos: []);
 
   @override
   void initState() {
-    todoGroup = domainPresenter.getTodoGroupByID(widget.todoGroupID);
+    domainPresenter.getTodoGroupByID(widget.todoGroupID).then((todoGroupDTO) {
+      setState(() {
+        todoGroup = todoGroupDTO;
+      });
+    });
     super.initState();
   }
 
-  void _updateState() {
+  Future<void> _updateState() async {
+    final todoGroupDTO =
+        await domainPresenter.getTodoGroupByID(widget.todoGroupID);
     setState(() {
-      todoGroup = domainPresenter.getTodoGroupByID(widget.todoGroupID);
+      todoGroup = todoGroupDTO;
     });
   }
 
-  void reorderTodo(int oldIndex, int newIndex) {
+  Future<void> reorderTodo(int oldIndex, int newIndex) async {
     var aTodo = todoGroup.todos[oldIndex];
-    domainController.reorderTodoOnGroup(
+    await domainController.reorderTodoOnGroup(
         todoGroupID: todoGroup.id,
         todoID: aTodo.id,
         newTodoPosition: oldIndex > newIndex ? newIndex + 1 : newIndex);
-    _updateState();
+    await _updateState();
   }
 
   Future<void> openAddTodoAlert() {
@@ -44,10 +50,10 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
       context: context, // user must tap button!
       builder: (BuildContext context) {
         return AddTodoAlert(
-          doneCallBack: (String text) {
-            domainController.createNewTodoOnGroup(
+          doneCallBack: (String text) async {
+            await domainController.createNewTodoOnGroup(
                 todoGroupID: widget.todoGroupID, text: text);
-            _updateState();
+            await _updateState();
             Navigator.of(context).pop();
           },
         );
@@ -59,11 +65,12 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
     return showDialog(
       context: context, // user must tap button!
       builder: (BuildContext context) {
-        return ConfirmDeleteTodoAlert(doneCallBack: ({required bool confirm}) {
+        return ConfirmDeleteTodoAlert(
+            doneCallBack: ({required bool confirm}) async {
           if (confirm) {
-            domainController.deleteTodoOnGroup(
+            await domainController.deleteTodoOnGroup(
                 todoGroupID: todoGroup.id, todoID: todoID);
-            _updateState();
+            await _updateState();
           }
           Navigator.of(context).pop();
         });
@@ -77,10 +84,10 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
       builder: (BuildContext context) {
         return ChangeTodoGroupTitleAlert(
           todoTitle: todoGroup.title,
-          doneCallBack: (String text) {
-            domainController.changeTodoGroupTitle(
+          doneCallBack: (String text) async {
+            await domainController.changeTodoGroupTitle(
                 todoGroupID: widget.todoGroupID, newTitle: text);
-            _updateState();
+            await _updateState();
             Navigator.of(context).pop();
           },
         );
@@ -94,10 +101,10 @@ class _TodoGroupEditPageState extends State<TodoGroupEditPage> {
       builder: (BuildContext context) {
         return ChangeTodoGroupColorAlert(
           todoColor: todoGroup.color,
-          doneCallBack: ({required int newColor}) {
-            domainController.changeTodoGroupColor(
+          doneCallBack: ({required int newColor}) async {
+            await domainController.changeTodoGroupColor(
                 todoGroupID: widget.todoGroupID, newColor: newColor);
-            _updateState();
+            await _updateState();
             Navigator.of(context).pop();
           },
         );

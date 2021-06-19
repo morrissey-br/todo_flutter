@@ -1,4 +1,4 @@
-import 'package:todo_flutter/core/concepts/Entity.dart';
+import 'package:todo_flutter/core/domain/concepts/Entity.dart';
 
 class Todo extends Entity<Todo> {
   String _text;
@@ -13,11 +13,6 @@ class Todo extends Entity<Todo> {
 
   static Todo fromMap(Map<String, dynamic> map) {
     return Todo._(map['id'], map['text'], map['status']);
-  }
-
-  @override
-  Map<String, dynamic> toMap() {
-    return {'id': id, 'text': _text, 'status': _status};
   }
 
   String get text {
