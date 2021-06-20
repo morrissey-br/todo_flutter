@@ -26,11 +26,10 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  void _updateState() {
-    domainPresenter.getAllTodoGroups().then((todoGroupsDTOs) {
-      setState(() {
-        todoGroups = todoGroupsDTOs;
-      });
+  Future<void> _updateState() async {
+    final todoGroupsDTOs = await domainPresenter.getAllTodoGroups();
+    setState(() {
+      todoGroups = todoGroupsDTOs;
     });
   }
 
@@ -39,24 +38,22 @@ class _HomePageState extends State<HomePage> {
       context: context, // user must tap button!
       builder: (BuildContext context) {
         return AddTodoGroupAlert(
-          doneCallBack: (String text) {
-            domainController.createNewTodoGroup(
+          doneCallBack: (String text) async {
+            await domainController.createNewTodoGroup(
                 title: text, color: Colors.blue.value);
-            domainPresenter.getAllTodoGroups().then((todoGroupsDTOs) {
-              setState(() {
-                todoGroups = todoGroupsDTOs;
-              });
-              Navigator.of(context).pop();
-            });
+            await _updateState();
+            Navigator.of(context).pop();
           },
         );
       },
     );
   }
 
-  void _onTodoClick({required String todoGroupID, required String todoID}) {
-    domainController.changeTodoStatus(todoGroupID: todoGroupID, todoID: todoID);
-    _updateState();
+  Future<void> _onTodoClick(
+      {required String todoGroupID, required String todoID}) async {
+    await domainController.changeTodoStatus(
+        todoGroupID: todoGroupID, todoID: todoID);
+    await _updateState();
   }
 
   @override
@@ -99,11 +96,11 @@ class _HomePageState extends State<HomePage> {
             todoGroup: todoGroups[index],
             isLast: index == todoGroups.length - 1 ? true : false,
             onTodoClick: (
-                {required String todoGroupID, required String todoID}) {
-              _onTodoClick(todoGroupID: todoGroupID, todoID: todoID);
+                {required String todoGroupID, required String todoID}) async {
+              await _onTodoClick(todoGroupID: todoGroupID, todoID: todoID);
             },
-            onEditReturn: () {
-              _updateState();
+            onEditReturn: () async {
+              await _updateState();
             },
           );
         },

@@ -2,21 +2,32 @@ import 'package:todo_flutter/core/domain/concepts/Entity.dart';
 
 class Todo extends Entity<Todo> {
   String _text;
+  String _todoGroupID;
   bool _status;
 
-  Todo._(String _id, this._text, this._status) : super(_id);
+  Todo.create(
+      {required String id, required String todoGroupID, required String text})
+      : this._todoGroupID = todoGroupID,
+        this._text = text,
+        this._status = false,
+        super(id);
 
-  static Todo create(
-      {required String id, required String todoGroupID, required String text}) {
-    return Todo._(id, text, false);
-  }
-
-  static Todo fromMap(Map<String, dynamic> map) {
-    return Todo._(map['id'], map['text'], map['status']);
-  }
+  Todo.rebuild(
+      {required String id,
+      required String todoGroupID,
+      required String text,
+      required bool status})
+      : this._todoGroupID = todoGroupID,
+        this._text = text,
+        this._status = status,
+        super(id);
 
   String get text {
     return _text;
+  }
+
+  String get todoGroupID {
+    return _todoGroupID;
   }
 
   bool get status {

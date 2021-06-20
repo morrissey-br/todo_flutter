@@ -7,19 +7,17 @@ class TodoGroup extends Entity<TodoGroup> {
   int _color;
   List<Todo> _todos;
 
-  TodoGroup._(String _id, this._title, this._color, this._todos) : super(_id);
+  TodoGroup.create(String id, String title, int color)
+      : this._title = title,
+        this._color = color,
+        this._todos = [],
+        super(id);
 
-  static TodoGroup create(String id, String title, int color) {
-    return TodoGroup._(id, title, color, []);
-  }
-
-  static TodoGroup fromMap(Map<String, dynamic> map) {
-    List<Map<String, dynamic>> todosMapList =
-        map['todos'] as List<Map<String, dynamic>>;
-    List<Todo> todos =
-        todosMapList.map((todoMap) => Todo.fromMap(todoMap)).toList();
-    return TodoGroup._(map['id'], map['title'], map['color'], todos);
-  }
+  TodoGroup.rebuild(String id, String title, int color, List<Todo> todos)
+      : this._title = title,
+        this._color = color,
+        this._todos = todos,
+        super(id);
 
   String get title {
     return _title;

@@ -66,4 +66,13 @@ class TodoGroupManager {
     todoGroup.reorderTodo(todoID: todoID, newTodoPosition: newTodoPosition);
     await _todoGroupRepo.save(todoGroup);
   }
+
+  Future<void> addTodoToGroup(
+      {required String todoGroupID, required String text}) async {
+    TodoGroup todoGroup = await _todoGroupRepo.getByID(todoGroupID);
+    String newID = _todoGroupRepo.newID();
+    Todo todo = Todo.create(id: newID, todoGroupID: todoGroupID, text: text);
+    todoGroup.add(todo);
+    await _todoGroupRepo.save(todoGroup);
+  }
 }
